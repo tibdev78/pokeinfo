@@ -1,0 +1,21 @@
+/* Add mobile styles for the component here.  */
+.modal {
+    margin: 20;
+    margin-top: 35;
+    border-radius: 8;
+    horizontal-align: center;
+    vertical-align: middle;
+    background-color: white;
+}
+
+
+.btn-primary {
+    height: 50;
+    background-color: #D51A1A;
+    border-radius: 5;
+    font-size: 20;
+    font-weight: 600;
+}
+.btn-primary:disabled {
+    opacity: 0.5;
+}

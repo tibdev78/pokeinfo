@@ -1,0 +1,17 @@
+/* Add mobile styles for the component here.  */
+.action-bar-label {
+    font-size: 22;
+    vertical-align: center;
+    font-weight: bold;
+}
+
+.font-awesome {
+    font-family: "FontAwesome";
+    font-size: 14;
+    font-weight: normal;
+    text-align: center;
+}
+
+.icon {
+    font-size: 20;
+}

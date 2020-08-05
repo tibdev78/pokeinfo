@@ -1,0 +1,27 @@
+
+<ModalStack dismissEnabled="false" class="p-20" verticalPosition="center">
+    <StackLayout class="modal" width="100%">
+        <Label class="h2 text-center" text="Search by "></Label>
+        <StackLayout class="hr m-20"></StackLayout>
+        <RadListView [items]="storeService.radioOptions" class="list-group">
+            <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
+                itemHeight="auto" spanCount="2">
+            </ListViewGridLayout>
+            <ng-template tkListItemTemplate let-item="item">
+                <GridLayout columns="*" height="100%" width="100%">
+                    <CheckBox #elem  col="0" [checked]="item.checked" (checkedChange)="elem.checked !== item.checked && changeCheckedRadio(item)" class="checkbox" boxType="circle"></CheckBox>
+                    <Label class="m-l-25" col="0" [text]="item.text" textWrap="true"></Label>
+                </GridLayout>
+            </ng-template>
+        </RadListView>
+        
+        <Label class="h2 text-center" text="Type"></Label>
+        <StackLayout class="hr m-10"></StackLayout>
+        <StackLayout class="p-10">
+            <ListPicker [items]="storeService.pokemonTypes" [selectedIndex]="storeService.pickerIndex" (selectedIndexChange)="onSelectedIndexChanged($event)"></ListPicker>
+        </StackLayout>
+        <StackLayout class="p-t-10 p-b-0" orientation="horizontal" verticalAlignment="center" horizontalAlignment="center">
+            <Button text="Save" class="-primary" fontSize="20" width="100%" height="15%" (tap)="onClose()"></Button>
+        </StackLayout>
+    </StackLayout>
+</ModalStack>

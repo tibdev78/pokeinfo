@@ -1,0 +1,36 @@
+<ActionBar>
+    <GridLayout columns="auto,*,auto" ios:padding="0 10" height="100%"
+    width="100%">
+        <Label col="0" text="PokeInfo" class="action-bar-label"></Label>
+        <StackLayout class="form" col="1">
+            <SearchBar hint="Filtered by {{ storeService.valueChecked.text }}"
+                [text]="searchPhrase" [formControl]="searchControl" (loaded)="searchBarLoaded($event)" ngDefaultControl>
+            </SearchBar>
+        </StackLayout>
+        <StackLayout col="2">
+            <Button class="fa" [text]="'fa-cog' | fonticon" fontSize = "25" (tap)="showDialog()"></Button>
+        </StackLayout>
+    </GridLayout>
+</ActionBar>
+
+<GridLayout tkExampleTitle tkToggleNavButton>
+    <RadListView [items]="pokemons" loadOnDemandMode="None" loadOnDemandBufferSize="20">
+        <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
+            itemHeight="200" spanCount="2"
+            itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
+        </ListViewGridLayout>
+        <ng-template tkListItemTemplate let-item="item">
+            <GridLayout backgroundColor="White">
+                <GridLayout margin="15">
+                    <ns-image-cache-view placeHolder="~/app/assets/images/default.png" stretch="aspectFit" width="200" height="200" [src]="item.img"></ns-image-cache-view>
+                    <GridLayout verticalAlignment="bottom">
+                        <StackLayout col="0" backgroundColor="#BBFFFFFF" paddingTop="8" paddingBottom="8">
+                            <Label text="{{ item.name }}" class="countryName"></Label>
+                        </StackLayout>
+                        <Label horizontalAlignment="right" text="N°{{ item.id }}" class="countryName"></Label>
+                    </GridLayout>
+                </GridLayout>
+            </GridLayout>
+        </ng-template>
+    </RadListView>
+</GridLayout>
