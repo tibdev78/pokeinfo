@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
-import { PokeService, StoreService } from '../../services'
-import { Poke } from 'src/app/model';
+import { StoreService, ActionService } from '../../services';
 import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -15,16 +14,14 @@ import { ExtendedShowModalOptions } from "nativescript-windowed-modal"
   styleUrls: ['./poke.component.css']
 })
 export class PokeComponent implements OnInit {
-  public pokemons: Poke[] = [];
-  public searchPhrase = "";
   public searchControl = new FormControl();
   public subscription: Subscription;
 
   constructor(
-    private pokeService: PokeService, 
     private vcRef: ViewContainerRef,
     private modalDialogService: ModalDialogService,
-    public storeService: StoreService) { }
+    public storeService: StoreService,
+    public actionService: ActionService) { }
 
   ngOnInit(): void {
     this.setEvent();
@@ -41,39 +38,17 @@ export class PokeComponent implements OnInit {
     this.subscription = this.searchControl.valueChanges
     .pipe(debounceTime(500))
     .subscribe((value) => {
-      this.filterPokemons(value)
+      this.actionService.filterPokemons(value)
     })
   }
   
   public initPokemons() {
-    this.filterPokemons(this.searchPhrase)
+    this.actionService.filterPokemons(this.storeService.searchPhrase)
   }
 
   public searchBarLoaded(event) {
-    var searchbar:SearchBar = <SearchBar>event.object;
+    let searchbar:SearchBar = <SearchBar>event.object;
     if(searchbar.android) searchbar.android.clearFocus();
-  }
-
-  private filterPokemons(inputValue) {
-    if (inputValue!== "") {
-      this.searchPhrase = inputValue;
-      switch(this.storeService.valueChecked.id) {
-        case 0:
-          this.pokemons = this.storeService.pickerIndex !== 7
-          ? this.pokeService.getPokemons().filter(d => d.name.toLowerCase().match(inputValue.toLowerCase()) && d.type.includes(this.storeService.pokemonTypes[this.storeService.pickerIndex]))
-          : this.pokeService.getPokemons().filter(d => d.name.toLowerCase().match(inputValue.toLowerCase()))
-          break;
-        case 1:
-          this.pokemons = this.storeService.pickerIndex !== 7
-          ? this.pokeService.getPokemons().filter(d => parseInt(d.id, 10) == parseInt(inputValue, 10) && d.type.includes(this.storeService.pokemonTypes[this.storeService.pickerIndex]))
-          : this.pokeService.getPokemons().filter(d => parseInt(d.id, 10) == parseInt(inputValue, 10))
-          break;
-      }
-    } else {
-      this.pokemons = this.storeService.pickerIndex !== 7
-      ? this.pokeService.getPokemons().filter(d => d.type.includes(this.storeService.pokemonTypes[this.storeService.pickerIndex]))
-      : this.pokeService.getPokemons();
-    }
   }
 
   public showDialog() {
@@ -86,8 +61,7 @@ export class PokeComponent implements OnInit {
       closeCallback: (_) => {}
     } as ExtendedShowModalOptions
     this.modalDialogService.showModal(DialogFilterComponent, options).then((_) => {
-      this.filterPokemons(this.searchControl.value ? this.searchControl.value : '');
+      this.actionService.filterPokemons(this.searchControl.value ? this.searchControl.value : '');
     })
   }
-
 }

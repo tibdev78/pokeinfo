@@ -4,7 +4,7 @@
         <Label col="0" text="PokeInfo" class="action-bar-label"></Label>
         <StackLayout class="form" col="1">
             <SearchBar hint="Filtered by {{ storeService.valueChecked.text }}"
-                [text]="searchPhrase" [formControl]="searchControl" (loaded)="searchBarLoaded($event)" ngDefaultControl>
+                [text]="storeService.searchPhrase" [formControl]="searchControl" (loaded)="searchBarLoaded($event)" ngDefaultControl>
             </SearchBar>
         </StackLayout>
         <StackLayout col="2">
@@ -14,7 +14,7 @@
 </ActionBar>
 
 <GridLayout tkExampleTitle tkToggleNavButton>
-    <RadListView [items]="pokemons" loadOnDemandMode="None" loadOnDemandBufferSize="20">
+    <RadListView [items]="storeService.pokemons" loadOnDemandMode="None" loadOnDemandBufferSize="20">
         <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
             itemHeight="200" spanCount="2"
             itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
