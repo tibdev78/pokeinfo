@@ -3,15 +3,15 @@
     <StackLayout class="modal" width="100%">
         <Label class="h2 text-center" text="Search by "></Label>
         <StackLayout class="hr m-20"></StackLayout>
-        <RadListView [items]="storeService.radioOptions" class="list-group">
+        <RadListView [items]="storeService.radioOptions">
             <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
-                itemHeight="auto" spanCount="2">
+                itemHeight="200" spanCount="2">
             </ListViewGridLayout>
             <ng-template tkListItemTemplate let-item="item">
-                <GridLayout columns="*" height="100%" width="100%">
-                    <CheckBox #elem  col="0" [checked]="item.checked" (checkedChange)="elem.checked !== item.checked && changeCheckedRadio(item)" class="checkbox" boxType="circle"></CheckBox>
-                    <Label class="m-l-25" col="0" [text]="item.text" textWrap="true"></Label>
-                </GridLayout>
+                <StackLayout class="m-l-30" iosOverflowSafeArea="false" orientation="horizontal">
+                    <CheckBox #elem class="m-l-2" [checked]="item.checked" (checkedChange)="elem.checked !== item.checked && changeCheckedRadio(item)" class="checkbox" boxType="circle"></CheckBox>
+                    <Label class="text-center" [text]="item.text" fontSize="20"></Label>
+                </StackLayout>
             </ng-template>
         </RadListView>
         

@@ -1,0 +1,45 @@
+<ActionBar [title]="pokemon.name" class="action-bar">
+    <NavigationButton android.systemIcon="ic_menu_back" ios.position="left" (tap)="goBack()"></NavigationButton>
+</ActionBar>
+
+<FlexboxLayout flexDirection="column">
+    <StackLayout flexGrow="0.2">
+        <ns-image-cache-view placeHolder="~/app/assets/default.png" stretch="aspectFit" width="200" height="200" [src]="pokemon.img"></ns-image-cache-view>
+    </StackLayout>
+    <StackLayout flexGrow="0.2">
+        <label class="h1 text-center" text="Types"></label>
+        <StackLayout class="hr m-10"></StackLayout>
+        <StackLayout>
+            <RadListView [items]="pokemon.type">
+                <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
+                    itemHeight="100" spanCount="3"
+                    itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
+                </ListViewGridLayout>
+                <ng-template tkListItemTemplate let-item="item">
+                    <StackLayout horizontalAlignment="center">
+                        <Label [text]="item" fontSize="20" fontStyle="italic"></Label>
+                    </StackLayout>
+                </ng-template>
+            </RadListView>
+        </StackLayout>
+    </StackLayout>
+    <StackLayout flexGrow="1">
+        <label class="h1 text-center" text="Stats"></label>
+        <StackLayout class="hr m-10"></StackLayout>
+        <RadListView [items]="customPokeStats">
+            <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
+                itemHeight="200" spanCount="3"
+                itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
+            </ListViewGridLayout>
+            <ng-template tkListItemTemplate let-item="item">
+                <StackLayout orientation="vertical" horizontalAlignment="center">
+                    <Label text="{{ item.name }}" fontSize="20" fontStyle="italic"></Label>
+                    <Label *ngIf="item.value; else noValue" class="text-center" [text]="item.value" fontSize="25"></Label>
+                    <ng-template #noValue>
+                        <Label class="text-center" text="0" fontSize="25"></Label>
+                    </ng-template>
+                </StackLayout>
+            </ng-template>
+        </RadListView>
+    </StackLayout>
+</FlexboxLayout>

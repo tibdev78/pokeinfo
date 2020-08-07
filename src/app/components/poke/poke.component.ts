@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef, OnDestroy } from '@angular/core';
 import { StoreService, ActionService } from '../../services';
 import { SearchBar } from "tns-core-modules/ui/search-bar";
 import { Subscription } from 'rxjs';
@@ -7,13 +7,15 @@ import { FormControl } from '@angular/forms';
 import { ModalDialogOptions, ModalDialogService } from '@nativescript/angular/modal-dialog'
 import { DialogFilterComponent } from '../dialog/dialog-filter/dialog-filter.component';
 import { ExtendedShowModalOptions } from "nativescript-windowed-modal"
+import { Poke } from 'src/app/model';
+import { RouterExtensions } from "@nativescript/angular/router";
 
 @Component({
   selector: 'ns-poke',
   templateUrl: './poke.component.html',
   styleUrls: ['./poke.component.css']
 })
-export class PokeComponent implements OnInit {
+export class PokeComponent implements OnInit, OnDestroy {
   public searchControl = new FormControl();
   public subscription: Subscription;
 
@@ -21,11 +23,16 @@ export class PokeComponent implements OnInit {
     private vcRef: ViewContainerRef,
     private modalDialogService: ModalDialogService,
     public storeService: StoreService,
-    public actionService: ActionService) { }
+    public actionService: ActionService,
+    public router: RouterExtensions) { }
 
   ngOnInit(): void {
     this.setEvent();
     this.initPokemons();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 
   public onClear(event) {
@@ -49,6 +56,17 @@ export class PokeComponent implements OnInit {
   public searchBarLoaded(event) {
     let searchbar:SearchBar = <SearchBar>event.object;
     if(searchbar.android) searchbar.android.clearFocus();
+  }
+
+  public navigateToPokeDetails(poke: Poke) {
+    this.router.navigateByUrl(`poke/${poke.id}`, {
+      animated: true,
+      transition: {
+        name: 'slideTop',
+        duration: 400,
+        curve: 'linear'
+      }
+    })
   }
 
   public showDialog() {

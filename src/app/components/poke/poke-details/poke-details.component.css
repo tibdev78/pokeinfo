@@ -1,0 +1,20 @@
+/* Add mobile styles for the component here.  */
+.gradientWrapper{
+    background: linear-gradient(#FFFFFF 24%, transparent 100%);
+}
+.titleSection {
+    margin: 60 48;
+}
+
+.title.top-part{
+    font-size: 36;
+    font-weight: 200;
+}
+.title.bottom-part{
+    font-size: 48;
+    font-weight: 700;
+}
+
+.height-type-list {
+    height: 10%;
+}

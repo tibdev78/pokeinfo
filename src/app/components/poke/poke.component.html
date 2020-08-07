@@ -13,24 +13,33 @@
     </GridLayout>
 </ActionBar>
 
-<GridLayout tkExampleTitle tkToggleNavButton>
-    <RadListView [items]="storeService.pokemons" loadOnDemandMode="None" loadOnDemandBufferSize="20">
-        <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
-            itemHeight="200" spanCount="2"
-            itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
-        </ListViewGridLayout>
-        <ng-template tkListItemTemplate let-item="item">
-            <GridLayout backgroundColor="White">
-                <GridLayout margin="15">
-                    <ns-image-cache-view placeHolder="~/app/assets/images/default.png" stretch="aspectFit" width="200" height="200" [src]="item.img"></ns-image-cache-view>
-                    <GridLayout verticalAlignment="bottom">
-                        <StackLayout col="0" backgroundColor="#BBFFFFFF" paddingTop="8" paddingBottom="8">
-                            <Label text="{{ item.name }}" class="countryName"></Label>
-                        </StackLayout>
-                        <Label horizontalAlignment="right" text="N°{{ item.id }}" class="countryName"></Label>
+<StackLayout *ngIf="storeService.pokemons.length == 0; else data">
+    <GridLayout>
+        <ns-image-cache-view stretch="aspectFit" width="200" height="200" src="~/app/assets/nopokemon.png"></ns-image-cache-view>
+    </GridLayout>
+</StackLayout>
+<ng-template #data>
+    <GridLayout tkExampleTitle tkToggleNavButton>
+        <RadListView [items]="storeService.pokemons" loadOnDemandMode="None" loadOnDemandBufferSize="20">
+            <ListViewGridLayout tkListViewLayout scrollDirection="Vertical"
+                itemHeight="200" spanCount="2"
+                itemInsertAnimation="Fade" itemDeleteAnimation="Fade">
+            </ListViewGridLayout>
+            <ng-template tkListItemTemplate let-item="item">
+                <StackLayout (tap)="navigateToPokeDetails(item)">
+                    <GridLayout backgroundColor="White">
+                        <GridLayout margin="15">
+                                <ns-image-cache-view placeHolder="~/app/assets/default.png" stretch="aspectFit" width="200" height="200" [src]="item.img"></ns-image-cache-view>
+                                <GridLayout verticalAlignment="bottom">
+                                    <StackLayout col="0" backgroundColor="#BBFFFFFF" paddingTop="8" paddingBottom="8">
+                                        <Label text="{{ item.name }}"></Label>
+                                    </StackLayout>
+                                    <Label horizontalAlignment="right" text="N°{{ item.id }}"></Label>
+                                </GridLayout>
+                        </GridLayout>
                     </GridLayout>
-                </GridLayout>
-            </GridLayout>
-        </ng-template>
-    </RadListView>
-</GridLayout>
+                </StackLayout>
+            </ng-template>
+        </RadListView>
+    </GridLayout>
+</ng-template>

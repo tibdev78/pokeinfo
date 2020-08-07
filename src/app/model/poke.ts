@@ -97,3 +97,8 @@ export interface Misc {
     fleeflag: string;
     entreeforestlevel: string;
 }
+
+export interface CustomPokeStats {
+    name: string,
+    value: number,
+}

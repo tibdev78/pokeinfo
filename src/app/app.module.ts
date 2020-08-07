@@ -10,6 +10,7 @@ import { DialogFilterComponent } from './components/dialog/dialog-filter/dialog-
 import { TNSCheckBoxModule } from '@nstudio/nativescript-checkbox/angular';
 import { ImageCacheViewComponent } from './components/custom/image-cache-view/image-cache-view.component';
 import { TNSImageCacheItModule } from 'nativescript-image-cache-it/angular';
+import { PokeDetailsComponent } from './components/poke/poke-details/poke-details.component';
 // import { NativeScriptFormsModule } from "nativescript-angular/forms";
 // import { NativeScriptHttpClientModule } from "nativescript-angular/http-client";
 TNSFontIconService.debug = true;
@@ -34,7 +35,8 @@ TNSFontIconService.debug = true;
         AppComponent,
         PokeComponent,
         DialogFilterComponent,
-        ImageCacheViewComponent
+        ImageCacheViewComponent,
+        PokeDetailsComponent
     ],
     providers: [
         {
